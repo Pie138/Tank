@@ -79,10 +79,4 @@ public class Shell : MonoBehaviour
 
         return damage;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
