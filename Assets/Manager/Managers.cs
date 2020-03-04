@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class Managers : MonoBehaviour
 {
+    //Reference to the overlay Text to display winning tect, etc
+    public Text m_MessageText;
+    public Text m_TimerText; 
+
     public GameObject[] m_Tanks;
 
     private float m_gameTime = 0;
@@ -33,6 +37,9 @@ public class Managers : MonoBehaviour
         {
             m_Tanks[i].SetActive(false);
         }
+
+        m_TimerText.gameObject.SetActive(false);
+        m_MessageText.text = "Get Ready";
     }
 
     
@@ -43,6 +50,8 @@ public class Managers : MonoBehaviour
             case GameState.Start:
                 if(Input.GetKeyUp(KeyCode.Return) == true)
                 {
+                    m_TimerText.gameObject.SetActive(true);
+                    m_MessageText.text = "";
                     m_GameState = GameState.Playing;
 
                     for (int i = 0; i < m_Tanks.Length; i++)
@@ -56,6 +65,7 @@ public class Managers : MonoBehaviour
 
                 m_gameTime += Time.deltaTime;
                 int seconds = Mathf.RoundToInt(m_gameTime);
+                m_TimerText.text = string.Format("{0:D2}:{1:D2}", (seconds / 60), (seconds % 60)); 
 
                 if (OneTankLeft() == true)
                 {
@@ -69,13 +79,25 @@ public class Managers : MonoBehaviour
                 if (isGameOver == true)
                 {
                     m_GameState = GameState.GameOver;
+                    m_TimerText.gameObject.SetActive(false);
+
+                    if (IsPlayerDead() == true)
+                    {
+                        m_MessageText.text = "TRY AGAIN";
+                    }
+                    else
+                    {
+                        m_MessageText.text = "WINNER!";
+                    }
                 }
                 break;
             case GameState.GameOver:
-                if (Input.GetKEyUp(KeyCode.Return) == true)
+                if (Input.GetKeyUp(KeyCode.Return) == true)
                 {
                     m_gameTime = 0;
                     m_GameState = GameState.Playing;
+                    m_MessageText.text = "";
+                    m_TimerText.gameObject.SetActive(true);
 
                     for (int i = 0; i < m_Tanks.Length; i++)
                     {
@@ -85,7 +107,7 @@ public class Managers : MonoBehaviour
                 break;
         }
 
-        if (INput.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape))
         {
             Application.Quit();
         }
@@ -102,5 +124,21 @@ public class Managers : MonoBehaviour
                 numTanksLeft++;
             }
         }
+        return numTanksLeft <= 1;
     }
+
+    private bool IsPlayerDead()
+    {
+        for (int i = 0; i < m_Tanks.Length; i++)
+        {
+            if (m_Tanks[i].activeSelf == false)
+            {
+                if (m_Tanks[i].tag == "Player")
+                    return true; 
+            }
+        }
+
+        return false; 
+    }
+    
 }
