@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.UI; 
 
-public class Managers : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
-    //Reference to the overlay Text to display winning tect, etc
+    public HighScores m_HighScores;
+
+    //Reference to the overlay Text to display winning text, etc
     public Text m_MessageText;
-    public Text m_TimerText; 
+    public Text m_TimerText;
 
     public GameObject[] m_Tanks;
 
@@ -30,7 +32,7 @@ public class Managers : MonoBehaviour
         m_GameState = GameState.Start;
     }
 
-    
+
     private void Start()
     {
         for (int i = 0; i < m_Tanks.Length; i++)
@@ -42,13 +44,13 @@ public class Managers : MonoBehaviour
         m_MessageText.text = "Get Ready";
     }
 
-    
+
     void Update()
     {
-       switch (m_GameState)
+        switch (m_GameState)
         {
             case GameState.Start:
-                if(Input.GetKeyUp(KeyCode.Return) == true)
+                if (Input.GetKeyUp(KeyCode.Return) == true)
                 {
                     m_TimerText.gameObject.SetActive(true);
                     m_MessageText.text = "";
@@ -65,7 +67,7 @@ public class Managers : MonoBehaviour
 
                 m_gameTime += Time.deltaTime;
                 int seconds = Mathf.RoundToInt(m_gameTime);
-                m_TimerText.text = string.Format("{0:D2}:{1:D2}", (seconds / 60), (seconds % 60)); 
+                m_TimerText.text = string.Format("{0:D2}:{1:D2}", (seconds / 60), (seconds % 60));
 
                 if (OneTankLeft() == true)
                 {
@@ -88,6 +90,10 @@ public class Managers : MonoBehaviour
                     else
                     {
                         m_MessageText.text = "WINNER!";
+
+                        //save the score
+                        m_HighScores.AddScore(Mathf.RoundToInt(m_gameTime));
+                        m_HighScores.SaveScoresToFile();
                     }
                 }
                 break;
@@ -134,11 +140,10 @@ public class Managers : MonoBehaviour
             if (m_Tanks[i].activeSelf == false)
             {
                 if (m_Tanks[i].tag == "Player")
-                    return true; 
+                    return true;
             }
         }
 
-        return false; 
+        return false;
     }
-    
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FileIO : MonoBehaviour
+public class HighScores : MonoBehaviour
 {
     public int[] scores = new int[10];
 
@@ -10,7 +10,7 @@ public class FileIO : MonoBehaviour
 
     public string scoreFileName = "highscores.txt";
 
-    
+
     void Start()
     {
         //We need to know where we're reading from and writhing to
@@ -22,10 +22,10 @@ public class FileIO : MonoBehaviour
         LoadScoresFromFile();
     }
 
-   
+
     void Update()
     {
-        
+
     }
 
     public void LoadScoresFromFile()
@@ -39,7 +39,7 @@ public class FileIO : MonoBehaviour
         else
         {
             Debug.Log("The file " + scoreFileName + "does not exist. No scores will be loaded.", this);
-            return; 
+            return;
         }
 
         //Make a new array of default values. This ensures that no old values stick around if we've loaded a scores file in the past
@@ -60,7 +60,7 @@ public class FileIO : MonoBehaviour
             int readScore = -1;
             //Try to parse it
             bool didParse = int.TryParse(fileLine, out readScore);
-            if (idParse)
+            if (didParse)
             {
                 //If we successfully read a number, put it in the array.
                 scores[scoreCount] = readScore;
@@ -68,8 +68,8 @@ public class FileIO : MonoBehaviour
             else
             {
                 //If the Number couldnt be parsed then we probably had junk in our file lets print an error, and then use a default value
-                Debug.log("Invalid line in scores file at " + scoreCount + ", using default value.", this);
-                scores[scoreCOunt] = 0;
+                Debug.Log("Invalid line in scores file at " + scoreCount + ", using default value.", this);
+                scores[scoreCount] = 0;
             }
             //Dont forget to incrememt the counter!
             scoreCount++;
@@ -77,8 +77,8 @@ public class FileIO : MonoBehaviour
 
         //Make sure to close the stream!
         fileReader.Close();
-        Debug.Log("High scores read from " + scoreFileName); 
-            
+        Debug.Log("High scores read from " + scoreFileName);
+
     }
 
     public void SaveScoresFromFile()
@@ -96,7 +96,7 @@ public class FileIO : MonoBehaviour
         fileWriter.Close();
 
         //Write a log message.
-        Debug.Log("High scores written to " + scoreFileName); 
+        Debug.Log("High scores written to " + scoreFileName);
     }
 
     public void AddScore(int newScore)
@@ -122,13 +122,13 @@ public class FileIO : MonoBehaviour
 
         //Then we move all of the scores after that index back by one position. We'll do this by looping from
         //the back of the array to our desired index.
-        for (int i = scores.Length - 1; i > desiredIndex; i --)
+        for (int i = scores.Length - 1; i > desiredIndex; i--)
         {
             scores[i] = scores[i - 1];
         }
 
         //Insert our new score in its place
         scores[desiredIndex] = newScore;
-        Debug.Log("Score of " + newScore + "entered into high scores at position " + desiredIndex, this); 
+        Debug.Log("Score of " + newScore + "entered into high scores at position " + desiredIndex, this);
     }
 }

@@ -611,14 +611,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 692562570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b254af862cf4e9142a6c9db401778e81, type: 3}
+  m_Script: {fileID: 11500000, guid: be3a890bc4812fe41908e32005cd7fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MessageText: {fileID: 1652509890}
-  m_TimerText: {fileID: 1188962100}
-  m_Tanks:
-  - {fileID: 485501651}
-  - {fileID: 1691013018}
 --- !u!4 &692562572
 Transform:
   m_ObjectHideFlags: 0
@@ -642,7 +637,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 692562570}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 788aac5ad2abc4241ba12b90de255867, type: 3}
+  m_Script: {fileID: 11500000, guid: e0268c32bff9f484396ed9d20a0c98d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &705507993
