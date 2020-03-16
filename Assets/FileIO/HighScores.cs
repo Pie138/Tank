@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO; 
 
 public class HighScores : MonoBehaviour
 {
@@ -81,7 +82,7 @@ public class HighScores : MonoBehaviour
 
     }
 
-    public void SaveScoresFromFile()
+    public void SaveScoresToFile()
     {
         //Create a StreamWriter for our file path.
         StreamWriter fileWriter = new StreamWriter(currentDirectory + "\\" + scoreFileName);
